@@ -5,10 +5,44 @@ folder (one subfolder per show, each containing a "Tourbook" doc), parses each t
 and upserts it into Supabase `tourbook_details` every 10 minutes. Runs on Google's side —
 no page needs to stay open.
 
-## Setup (per artist)
+## Editing from the repo (clasp)
+
+`vena-tour-feed.gs` is the source of truth in git. To keep the **live** Apps Script
+project in sync with this file — so it can be edited and pushed from the repo instead of
+pasted into the online editor — link it once with
+[clasp](https://github.com/google/clasp):
+
+```bash
+cd ~/Dev/vena-tourbook
+npm install                       # installs @google/clasp (devDependency)
+npx clasp login                   # opens Google sign-in in your browser (one time)
+cp .clasp.json.example .clasp.json
+# paste the Script ID: Apps Script editor → Project Settings (gear) → IDs → Script ID
+npm run as:pull                   # pull the live project (code + manifest) into apps-script/
+```
+
+Then the round-trip:
+
+| Command | What it does |
+|---|---|
+| `npm run as:push` | deploy `apps-script/` to the live project |
+| `npm run as:pull` | bring live changes back into the repo |
+| `npm run as:run -- syncTourbooks` | execute a function remotely¹ |
+| `npm run as:logs` | tail the execution logs¹ |
+
+¹ `as:run` / `as:logs` also need the Apps Script API enabled
+(script.google.com/home/usersettings) and a linked Google Cloud project. Without them,
+`as:push` still works — run the function from the editor or let the 10-minute trigger fire,
+then read the execution log there.
+
+`.clasp.json` (holds the Script ID) and `~/.clasprc.json` (holds your Google credentials)
+are gitignored. Each artist is a separate Apps Script project, so each gets its own
+`.clasp.json` when you're working on it.
+
+## Setup (per artist, first time)
 
 1. Go to [script.google.com](https://script.google.com) → **New project** → paste
-   `vena-tour-feed.gs`.
+   `vena-tour-feed.gs` (or `clasp create` + `as:push` from the repo).
 2. Left sidebar → **Services (+)** → add **Drive API** (Advanced). Required to read Word
    (`.docx`) tourbooks; Google-Docs ones work without it.
 3. **Project Settings** → **Script properties** → add:

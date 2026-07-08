@@ -1,0 +1,6 @@
+{
+  "//": "Copy to .clasp.json and paste the live project's Script ID.",
+  "//scriptId": "Apps Script editor → Project Settings (gear) → IDs → Script ID.",
+  "scriptId": "PASTE_SCRIPT_ID_HERE",
+  "rootDir": "apps-script"
+}

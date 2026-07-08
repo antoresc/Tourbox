@@ -43,3 +43,7 @@ next-env.d.ts
 # local seed extract
 scripts/source-data.json
 scripts/seed.sql
+
+# clasp (Apps Script) — local link + credentials, never committed
+.clasp.json
+.clasprc.json

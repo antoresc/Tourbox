@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "as:clone": "clasp clone",
+    "as:pull": "clasp pull",
+    "as:push": "clasp push",
+    "as:run": "clasp run",
+    "as:logs": "clasp logs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
@@ -25,6 +30,7 @@
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "@google/clasp": "^2.4.2"
   }
 }
