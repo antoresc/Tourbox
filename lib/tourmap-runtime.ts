@@ -58,7 +58,7 @@ export function initTourMap(root: HTMLElement, opts: InitOptions): () => void {
   const nextChip = $("nextChip");
   const nextCityEl = $("nextCity");
   const nextSubEl = $("nextSub");
-  const app = $("app");
+  const app = root; // root IS the #app element (querySelector only finds descendants)
 
   const state = { month: "all", route: false, routeToNext: false };
   let sel: string | null = null;
