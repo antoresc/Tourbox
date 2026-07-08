@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VENA TourBook
 
-## Getting Started
+Multi-tenant interactive tour map for NUDA artists. One page per artist at
+**`/tour/[artistSlug]`** — a panning/zoomable map of Europe with colour-coded show pins,
+a month filter, route overlays, and per-date "tourbook" detail cards.
 
-First, run the development server:
+Ported from a single static HTML file into Next.js + Supabase, deployed on Vercel.
+
+## Access model
+
+- **Public:** the map, dates, cities, venues, and statuses.
+- **Auth-gated (Supabase Auth):** the *scheda tecnica* — contacts, hotel, timings,
+  logistics. Logged-out visitors see a 🔒 "Sblocca" prompt; the sensitive data is never
+  sent to unauthenticated clients (it's fetched server-side only when a session exists).
+
+## Stack
+
+Next.js (App Router) + TypeScript + Tailwind · Supabase (Postgres + Auth + RLS) ·
+`@supabase/ssr` · Vercel.
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.local.example .env.local   # fill in the two values below
+npm run dev                        # http://localhost:3000
+npm test                           # vitest unit tests
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment variables (frontend only)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Var | Notes |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon / publishable key |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The **service-role key is never used by the frontend** — it lives only in the Google Apps
+Script (see below).
 
-## Learn More
+## Data
 
-To learn more about Next.js, take a look at the following resources:
+- Schema: `supabase/migrations/0001_init.sql` (`artists`, `shows`, `tourbook_details`).
+- Seed (Gioia Lucia): `scripts/extract-source.mjs` + `scripts/seed.mjs`
+  (or `gen-seed-sql.mjs` → SQL). Generated `source-data.json` / `seed.sql` are gitignored
+  because they contain personal contact data.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tourbook auto-sync
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`apps-script/` — one Google Apps Script per artist reads the artist's Drive booking folder
+and upserts tourbooks into Supabase every 10 minutes. See `apps-script/README.md`.
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Pushed to GitHub, auto-deployed to Vercel on every push to `main`. Set the two
+`NEXT_PUBLIC_*` env vars in the Vercel project; add the deploy domain to Supabase Auth →
+URL Configuration so magic-link redirects work.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Roadmap
+
+- **Phase 2 — booker admin:** a protected UI to create artists, add/edit shows, and link a
+  Drive folder (`artists.drive_folder_id` already exists in the schema).
