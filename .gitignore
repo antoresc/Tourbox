@@ -42,3 +42,4 @@ next-env.d.ts
 
 # local seed extract
 scripts/source-data.json
+scripts/seed.sql
