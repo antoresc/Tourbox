@@ -13,8 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VENA TourBook",
-  description: "Mappa tour multi-artista — NUDA",
+  title: "NUDA Tourbox",
+  description: "Mappa tour — NUDA",
+  applicationName: "NUDA Tourbox",
+  openGraph: {
+    title: "NUDA Tourbox",
+    description: "Mappa tour — NUDA",
+    siteName: "NUDA Tourbox",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "NUDA Tourbox",
+    description: "Mappa tour — NUDA",
+  },
 };
 
 export default function RootLayout({
