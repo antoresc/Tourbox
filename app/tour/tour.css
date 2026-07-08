@@ -194,3 +194,21 @@
   .unlock{display:inline-flex;align-items:center;gap:7px;margin:12px 0 6px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:transparent;color:var(--red);border:1px solid rgba(229,52,28,.4);border-radius:2px;padding:8px 11px;cursor:pointer;transition:.15s}
   .unlock:hover{background:rgba(229,52,28,.06);border-color:var(--red)}
   .unlock__hint{font-family:"Space Mono",monospace;font-size:10px;color:var(--faint);margin-top:4px;letter-spacing:.02em}
+
+  /* Staff auth modal (VENA TourBook) */
+  .modal-backdrop{position:fixed;inset:0;z-index:50;background:rgba(23,21,15,.44);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal{width:min(360px,100%);background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:18px 18px 16px}
+  .modal__hd{display:flex;align-items:center;justify-content:space-between}
+  .modal__title{font-family:"Anton",sans-serif;font-size:18px;letter-spacing:.04em;text-transform:uppercase}
+  .modal__close{background:transparent;border:0;color:var(--muted);font-size:22px;line-height:1;cursor:pointer}
+  .modal__close:hover{color:var(--ink)}
+  .modal__sub{font-size:12.5px;color:var(--muted);margin:6px 0 14px;line-height:1.4}
+  .modal__form{display:flex;flex-direction:column;gap:8px}
+  .modal input{font-family:inherit;font-size:14px;padding:10px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink)}
+  .modal input:focus{outline:none;border-color:var(--faint)}
+  .modal__submit{margin-top:2px;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:#fff;border:0;border-radius:4px;padding:11px;cursor:pointer}
+  .modal__submit:hover{background:#000}
+  .modal__submit:disabled{opacity:.6;cursor:default}
+  .modal__magic{margin-top:10px;width:100%;background:transparent;border:0;color:var(--muted);font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:underline}
+  .modal__magic:hover{color:var(--ink)}
+  .modal__msg{margin-top:12px;font-size:12px;color:var(--red);line-height:1.4}
