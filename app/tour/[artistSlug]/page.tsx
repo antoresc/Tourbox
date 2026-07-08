@@ -22,12 +22,10 @@ export default async function Page({
 
   const { data: shows } = await db.from("shows").select("*").eq("artist_id", artist.id);
 
-  const {
-    data: { user },
-  } = await db.auth.getUser();
-
+  // TEMP: tourbook is public (no login) for now. To re-lock, restore the
+  // `user` gate below and drop the "tourbook public read TEMP" RLS policy.
   let details: Record<number, TourbookDetail> | null = null;
-  if (user && shows?.length) {
+  if (shows?.length) {
     const { data: tb } = await db
       .from("tourbook_details")
       .select("*")
