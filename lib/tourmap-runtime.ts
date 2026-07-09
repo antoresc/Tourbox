@@ -382,7 +382,8 @@ export function initTourMap(root: HTMLElement, opts: InitOptions): () => void {
   }
   function contactRow(c: Contact, role: string) {
     const links: string[] = [];
-    if (c.phone) links.push(`<a href="tel:${esc(c.tel || c.phone)}">${esc(c.phone)}</a>`);
+    const num = c.phone || c.tel; // some records only carry `tel`; show whichever exists
+    if (num) links.push(`<a href="tel:${esc(c.tel || c.phone)}">${esc(num)}</a>`);
     if (c.email) links.push(`<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>`);
     const name = c.name ? esc(c.name) : "—";
     return `<div class="ct"><span class="ct__n">${name}${role ? `<span class="role">${role}</span>` : ""}</span><span class="ct__v">${links.join("")}</span></div>`;
